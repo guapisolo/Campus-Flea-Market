@@ -6,6 +6,7 @@ This is an open source project based on [django-ecommerce-project](https://githu
 
 
 
+
 ## Setup
 
 Make sure your python version is <= 3.9.
