@@ -5,8 +5,6 @@ This is an open source project based on [django-ecommerce-project](https://githu
 这是一个基于 [django-ecommerce-project](https://github.com/veryacademy/django-ecommerce-project) 开发的开源项目。
 
 
-
-
 ## Setup
 
 Make sure your python version is <= 3.9.
@@ -28,8 +26,6 @@ Once installed, run the program by invoking the following command:
 ```
 py manage.py runserver
 ```
-
-
 
 ## Tips
 
