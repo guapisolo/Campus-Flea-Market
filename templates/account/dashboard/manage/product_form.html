@@ -1,0 +1,56 @@
+{% extends "../../sub_base.html" %}
+{% load static %}
+
+{% block title %} 添加商品 {% endblock title %}
+
+{% block sub_content %}
+
+<div class="col-6 mx-auto">
+    {% if update %}
+        <h1 class="h3">更新 商品</h1>
+        <div>在此处更新您的<b>商品</b>信息</div>
+    {% else %}
+        <h1 class="h3">创建 商品</h1>
+        <div>在此处创建新的<b>商品</b></div>
+    {% endif %}
+
+    {% if form.errors %}
+    <p>请修改以下错误：</p>
+    {% for field in form %}
+    {% if field.errors %}
+    <div class="alert alert-primary" role="alert">
+      {{ field.label }}: {{ field.errors|striptags }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    
+    <hr />
+    <form enctype="multipart/form-data" class="account-form" action="" method="post">
+        {% csrf_token %}
+        <label class="fw-bold">{{ form.category.label}}</label>
+        {{ form.category }}
+        <label class="fw-bold">{{ form.title.label}}</label>
+        {{ form.title }}
+        <label class="fw-bold">{{ form.quantity.label}}</label>
+        {{ form.quantity }}
+        <label class="fw-bold">{{ form.description.label}}</label>
+        {{ form.description }}
+        <label class="fw-bold">{{ form.regular_price.label}}</label>
+        {{ form.regular_price }}
+        <label class="fw-bold">{{ form.discount_price.label}}</label>
+        {{ form.discount_price }}
+        <label class="fw-bold">{{ form.is_active.label}}</label>
+        <div>{{ form.is_active }}</div>
+        
+        <div class = "form-control">
+            {{ form_image.as_table}}
+        </div>
+        {% if update %}
+            <input class="btn btn-primary col-12 my-2" type="submit" value="更新" />
+        {% else %}
+            <input class="btn btn-primary col-12 my-2" type="submit" value="创建" />
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

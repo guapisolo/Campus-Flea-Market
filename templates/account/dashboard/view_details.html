@@ -1,0 +1,61 @@
+{% extends "../sub_base.html" %}
+{% block title %}编辑您的地址{% endblock %}
+
+
+
+{% block sub_content %}
+
+<div class="container-fluid bg-light">
+    <div class="container">
+        <div class="row">
+        <div class="album py-5">
+            <div class="pb-3">
+            <h1 class="h3">{{seller.name}}的主页</h1>
+            </div>
+            <label class="small font-weight-bold">{{ seller.resume }}</label>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="pb-4">
+            <h1 class="h4">卖家宝贝</h1>
+            </div>
+            <label class="small font-weight-bold">卖家邮箱:{{seller.email}}</label>
+            <br>
+            <label class="small font-weight-bold">卖家手机号:{{seller.mobile}}</label>
+        </p> </p> </p>
+            {% if not products %}
+            <div class="col-12">暂无可售商品。</div>
+            {% else %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+            {% for product in products %}
+            <div class="col">
+                <div class="card border-0 shadow shadow-md">
+                {% for image in product.product_image.all %}
+                {% if image.is_feature %}
+                <img class="img-fluid" alt="Responsive image" src="{{ image.image.url }}"
+                    alt="{{ image.image.alt_text }}">
+                {% endif %}
+                {% endfor %}
+                <div class="card-body px-2">
+                    <p class="card-text">
+                    <a class="text-dark text-decoration-none"
+                        href="{{ product.get_absolute_url }}">{{product.title|slice:":50" }}</a>
+                    </p>
+                    {% if product.quantity == 0 %}
+                    <p class="card-text text-danger">
+                        售罄
+                    </p>
+                    {% endif %}
+                    <div class="fw-bold">{{product.regular_price}} 元</div>
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+{% endblock %}

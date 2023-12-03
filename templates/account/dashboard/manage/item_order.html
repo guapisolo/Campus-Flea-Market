@@ -1,0 +1,52 @@
+{% extends "../../sub_base.html" %}
+{% block title %}{{product.title}}{% endblock %}
+
+{% block sub_content %}
+
+<div class="col-12">
+  <h1 class="h2">{{product.title}}</h1>
+</div>
+<div class="col-12 d-flex justify-content-between">
+  <div>以下为{{product.title}}的所有<b>订单</b>和顾客个人信息</div>
+</div>
+<hr />
+ <div class="container">
+      {% for order in product.order_product.all %}
+      <div class="row g-3">
+        <div class="col-12 bg-light p-3 d-flex justify-content-between">
+          <div class="d-flex d-flex-inline">
+            <div class="pe-3">{{ order.created  | date:"Y-m-d H:i:s" }}</div>
+            <div class="dropdown">
+            <a class="text-reset text-decoration-none dropdown-toggle" href="#" role="link" id="dropdownLink" data-bs-toggle="dropdown" aria-expanded="false">
+            邮寄地址 
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+            </svg>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-item-text small"><b>{{order.full_name}}</b></li>
+              <li class="dropdown-item-text small">{{order.city}}<br>{{order.address1}}<br>{{order.address2}}</li>
+              <li class="dropdown-item-text small">{{order.postal_code}}</li>
+              <li class="dropdown-item-text small">电话：{{order.phone}}</li>
+            </ul>
+            </div>
+          </div>
+          <div class="text-end">
+            总花费： <span class="fw-bold">{{ order.total_paid }} 元</span>
+          </div>
+        </div>
+        <div class="col-md-5 col-lg-4 order-last p-0 order-3">
+          <div class="d-grid gap-2 ">
+            {% if order.finish %}
+              <p class="alert alert-success text-center" aria-disabled="true">已完成</p>
+            {% else %}
+              <p class="alert alert-danger text-center" aria-disabled="true">未完成</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+
+
+{% endblock %}

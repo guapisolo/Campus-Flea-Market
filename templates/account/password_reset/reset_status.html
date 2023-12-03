@@ -1,0 +1,18 @@
+{% extends "../sub_base.html" %}
+{% block title %}密码重置状态{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div>
+        {% if 'email' in request.get_full_path %}
+        <h3 class="mb-4">密码重置成功</h3>
+        <p>请按照邮件指示完成操作</p>
+        {% endif%}
+        {% if 'complete' in request.get_full_path %}
+        <h3 class="mb-4">密码重置成功</h3>
+        <a href="{% url "account:login" %}">登录</a>
+        {% endif%}
+    </div>
+</div>
+
+{% endblock %}

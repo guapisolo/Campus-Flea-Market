@@ -1,0 +1,70 @@
+{% extends "../../sub_base.html" %}
+{% load static %}
+{% block title %} 用户商品管理页面 {% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row px-3 pb-3">
+                        <div class="h5 col-sm-3">{{ user.name }}的商品</div>
+                        <a href="{% url "account:Product_add" %}" class="btn btn-primary col-sm-2 m-2">添加商品</a>
+                        <a href="{% url "account:All_order" %}" class="btn btn-secondary col-sm-2 m-2">查看全部订单</a>
+                    </div>
+                    {% if not products %}
+                    <div class="col-12">您暂时没有出售任何商品</div>
+                    {% else %}
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+                    {% for product in products %}
+                    <div class="col">
+                        <div class="card border-0 shadow shadow-md">
+                            {% for image in product.product_image.all %}
+                            {% if image.is_feature %}
+                            <img class="img-fluid" alt="Responsive image" src="{{ image.image.url }}"
+                            alt="{{ image.image.alt_text }}">
+                            {% endif %}
+                            {% endfor %}
+                            <div class="card-body px-2">
+                                <p class="card-text">
+                                    <a class="text-dark text-decoration-none"
+                                     href="{{ product.get_absolute_url }}">{{product.title|slice:":50" }}</a>
+                                </p>
+                                {% if product.quantity == 0 %}
+                                    <p class="card-text text-danger">
+                                        售罄
+                                    </p>
+                                {% endif %}
+                                <div class="fw-bold">{{product.regular_price}} 元</div>
+                            </div>
+                            <div class = "container my-3">
+                                <a href="{% url "account:Product_update" product.id %}">
+                                    <button type="button" id="update-button" data-index="{{product.id}}"
+                                        class="btn btn-outline-primary btn-sm update-button col-12">
+                                        更新
+                                    </button>
+                                </a>
+                                <a href="{% url "account:item_order" product.id %}">
+                                    <button type="button" id="all-order" data-index="{{product.id}}"
+                                        class="btn btn-outline-secondary btn-sm update-button col-12">
+                                        查看订单
+                                    </button>
+                                </a>
+                                <a href="{% url "account:Product_delete" product.id %}">
+                                    <button type="button" id="delete-button" data-index="{{product.id}}"
+                                        class="btn btn-outline-secondary btn-sm delete-button col-12">
+                                        删除
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+          </div>
+    </div>
+</div>
+{% endblock content %}

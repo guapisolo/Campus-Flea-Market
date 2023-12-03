@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}UESTC跳蚤市场{% endblock %}
+{% block content %}
+
+<section class="text-center container">
+  <div class="row mx-auto">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      {% if not user.is_authenticated %}
+      <h1 class="h1 fw-bold">欢迎来到UESTC跳蚤市场</h1>
+      <p class="lead text-muted">分享，查找，交易，评价</p>
+      <p class="lead text-muted">在这里，您可以放心地与他人交易</p>
+      <p>
+          <a href="{%url 'account:login'%}" class="btn btn-primary my-2">创建账号或登录</a>
+      </p>
+      {% else %}
+       <h1 class="h1 fw-bold">UESTC跳蚤市场</h1>
+      {% endif %}
+    </div>
+    <div class="container py-3">
+      <form>
+        <div class="input-group input-group-md row">
+          <span class="input-group-text col-sm-2">探索商品</span>
+          <input class="form-control col-sm-8" type="text" name="search_text">
+          <button class="btn btn-primary col-sm-2" type="submit" action="." method="GET">搜索</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="container-fluid bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="album py-5">
+        <div class="pb-3">
+          <h1 class="h3">发现</h1>
+        </div>
+        {% if not products %}
+        <div class="col-12">暂无可售商品。</div>
+        {% else %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+          {% for product in products %}
+          <div class="col">
+            <div class="card border-0 shadow shadow-md">
+              {% for image in product.product_image.all %}
+              {% if image.is_feature %}
+              <img class="img-fluid" alt="Responsive image" src="{{ image.image.url }}"
+                alt="{{ image.image.alt_text }}">
+              {% endif %}
+              {% endfor %}
+              <div class="card-body px-2">
+                <p class="card-text">
+                  <a class="text-dark text-decoration-none"
+                    href="{{ product.get_absolute_url }}">{{product.title|slice:":50" }}</a>
+                </p>
+                {% if product.quantity == 0 %}
+                  <p class="card-text text-danger">
+                      售罄
+                  </p>
+                {% endif %}
+                <div class="fw-bold">{{product.regular_price}} 元</div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}

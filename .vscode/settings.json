@@ -1,0 +1,25 @@
+{
+    "editor.formatOnSave": false,
+    "python.defaultInterpreterPath": "C:\\Users\\guapisolo\\anaconda\\envs\\Django1\\python",
+    "python.pythonPath": "C:\\Users\\guapisolo\\anaconda\\envs\\Django1\\python",
+    "python.sortImports.args": [
+        "--profile=black",
+    ],
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length=119"
+    ],
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    // Django Extension
+    "files.associations": {
+        "**/*.html": "html",
+        "**/templates/*.html": "django-html",
+        "**/templates/**/*.html": "django-html",
+        "**/templates/**/*.js": "javascript",
+        "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+    },
+}

@@ -1,0 +1,14 @@
+{% extends "../base.html" %}
+
+{% block content %}
+<div class="col-6 mx-auto">
+<h1>删除商品</h1>
+
+<p>确认要删除商品 <b>{{ product }}</b> 吗?</p>
+  <form class="account-form" action="" method="POST">
+    {% csrf_token %}
+    <button class="form-control btn btn-danger" type="submit" action="">确认要删除商品</button>
+  </form>
+</div >
+
+{% endblock %}

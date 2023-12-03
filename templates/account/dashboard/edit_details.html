@@ -1,0 +1,46 @@
+{% extends "../sub_base.html" %}
+{% block title %}修改用户信息{% endblock %}
+{% block sub_content %}
+
+<div class="col-6 mx-auto">
+<form class="account-form" method="post" enctype="multipart/form-data">
+    {% if form.is_valid %}
+    <div class="alert alert-primary" role="alert">
+        信息已成功修改!
+    </div>
+    <p class="small text-center pt-0">
+        <a href="{% url "account:dashboard" %}">回到用户面板</a>
+    </p>
+    {%else%}
+    <h3>修改你的信息</h3>
+    <p>你可以使用如下表单修改信息:</p>
+    {% endif %}
+    
+    {% if form.errors %}
+    <div class="alert alert-primary" role="alert">
+        <p>请检查手机号格式是否有误</p>
+    </div>
+    {% endif %}
+
+    {% csrf_token %}
+    <label class="small font-weight-bold">{{ form.email.label}}</label>
+    {{ form.email }}
+    <label class="small font-weight-bold">{{ form.mobile.label}}</label>
+    {{ form.mobile }}
+    <label class="small font-weight-bold">{{ form.resume.label}}</label>
+    {% comment %} <div class="form-group">
+        <textarea class="form-control" rows="3">{{ form.resume }}</textarea>
+    </div> {% endcomment %}
+    {{ form.resume }}
+    <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw-bold w-100" type="submit" value="Save changes">保存修改</button>
+    <hr class="mb-3">
+</form>
+<form class="account-form" action="{% url "account:delete_user" %}" method="post">
+    {% csrf_token %}
+    <p class=" h3 pt-4 font-weight-bold">删除账户</p>
+    <p>你确定要删除此账户吗?</p>
+    <button type="submit" role="button" class="btn btn-danger btn-block py-2 mb-4 mt-5 fw-bold w-100">删除</button>
+</form>
+</div>
+
+{% endblock %}

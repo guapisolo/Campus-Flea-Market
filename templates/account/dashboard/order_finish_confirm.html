@@ -1,0 +1,14 @@
+{% extends "../sub_base.html" %}
+
+{% block content %}
+<div class="col-6 mx-auto">
+<h1>确认收货</h1>
+
+<p>请再次确认，是否要对该订单确认收货?</p>
+  <form class="account-form" action="" method="POST">
+    {% csrf_token %}
+    <button class="form-control btn btn-warning" type="submit" action="">确认收货</button>
+  </form>
+</div >
+
+{% endblock %}

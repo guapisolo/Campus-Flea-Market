@@ -1,0 +1,29 @@
+{% extends "./sub_base.html" %}
+{% block title %}登录账号{% endblock %}
+{% block sub_content %}
+
+<script src="/static/js/ddxx.js"> </script>
+<form class="account-form o-8 bg-light p-4 shadow shadow-lg" action="{% url 'account:login' %}" method="post">
+  {% csrf_token %}
+  <h3 class="mb-4">登录</h3>
+  {% if form.errors %}
+  <div class="alert alert-primary" role="alert">
+    登录失败: 账号或密码输入错误!
+  </div>
+  {% endif %}
+  <label class="form-label">邮箱地址</label>
+  {{ form.username}}
+  <label class="form-label">密码</label>
+  {{ form.password}}
+  <div class="d-grid gap-2">
+    <input type="hidden" name="next" value="{{ next }}">
+    <button class="btn btn-primary py-2 mb-4 mt-5 fw-bold" type="submit" value="Log-in">登录
+    </button>
+  </div>
+  <div class="flex-column justify-content-center mx-auto pb-3">
+    <div class="text-center"><a href="{% url "account:register" %}">创建账号</a></div>
+    <div class="text-center"><a href="{% url "account:pwdreset" %}">忘记密码？</a></div>
+  </div>
+</form>
+
+{% endblock %}

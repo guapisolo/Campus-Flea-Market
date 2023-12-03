@@ -1,0 +1,59 @@
+{% extends "../base.html" %}
+{% block title %}
+{% if category %}{{ category.name }}{% else %}商品{% endif %}
+{% endblock %}
+{% block content %}
+
+<div class="container" style="max-width: 1000px">
+  <div class="col-12">
+    <h1 class="h2">{{ category.name|title }}</h1>
+  </div>
+  <div class="col-12 d-flex justify-content-between">
+    {% comment %} <div><b>畅销</b> 商品已被购买</div> {% endcomment %}
+    <div>{{ category.brief }}</div>
+  </div>
+  <hr />
+</div>
+<div class="container-fluid bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="album py-5">
+          <div class="pb-3">
+            <h1 class="h3">发现</h1>
+          </div>
+          {% if not products %}
+          <div class="col-12">暂无可售商品。</div>
+          {% else %}
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+            {% for product in products %}
+            <div class="col">
+              <div class="card border-0 shadow shadow-md">
+                {% for image in product.product_image.all %}
+                {% if image.is_feature %}
+                <img class="img-fluid" alt="Responsive image" src="{{ image.image.url }}"
+                  alt="{{ image.image.alt_text }}">
+                {% endif %}
+                {% endfor %}
+                <div class="card-body px-2">
+                  <p class="card-text">
+                    <a class="text-dark text-decoration-none"
+                      href="{{ product.get_absolute_url }}">{{product.title|slice:":50" }}</a>
+                  </p>
+                  {% if product.quantity == 0 %}
+                    <p class="card-text text-danger">
+                        售罄
+                    </p>
+                  {% endif %}
+                  <div class="fw-bold">{{product.regular_price}} 元</div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block title %}支付成功{%endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="col-12">
+    <h1 class="h2">支付成功</h1>
+  </div>
+  <div class="col-12">
+    <p>订单已提交</p>
+  </div>
+  <hr />
+  <div class="col-12">
+    <p>查看全部订单 <a href="{% url 'account:user_orders'%}">订单管理</a></p>
+  </div>
+</div>
+
+
+{% endblock %}

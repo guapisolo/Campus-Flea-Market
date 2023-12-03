@@ -1,0 +1,43 @@
+{% extends "../sub_base.html" %}
+{% block title %}地址管理{% endblock %}
+
+{% block sub_content %}
+<div class="col-6 mx-auto">
+  <h1 class="h3">添加/编辑 地址</h1>
+  <div>编辑<b>邮寄地址</b></div>
+  <hr />
+  <form name="address_form" class="account-form" method="post" enctype="multipart/form-data">
+    {% if form.errors %}
+    <div class="alert alert-primary" role="alert">
+      错误：请重新尝试!
+    </div>
+    {% endif %}
+    {% csrf_token %}
+    <label class="small fw-bold">姓名</label>
+    {{ form.full_name }}
+    <label class="small fw-bold">电话</label>
+    {{ form.phone }}
+    <label class="small fw-bold">省市</label>
+    {{ form.town_city }}
+    <label class="small fw-bold">地址</label>
+    {{ form.address_line }}
+    <label class="small fw-bold">详细地址</label>
+    {{ form.address_line2 }}
+    <label class="small fw-bold">邮编</label>
+    {{ form.postcode }}
+    <button class="btn btn-primary btn-block py-2 mb-4 mt-4 fw-bold w-100" type="button" value="Submit" onclick="submitForm()">
+    提交
+    </button>
+  </form>
+
+</div>
+
+<script> 
+function submitForm() {
+   var form = document.getElementsByName('address_form')[0];
+   form.submit(); // Submit the form
+   form.reset();  // Reset all form data
+   return false; // Prevent page refresh
+}
+</script>
+{% endblock %}

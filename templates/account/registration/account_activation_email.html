@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+    <span>Hi {{ user.name }},</span><br>
+    <span>欢迎您来到UESTC跳蚤市场！</span><br>
+    <span>您已成功创建账号。请点击下面的链接来激活您的账号。</span><br>
+    <a href="http://{{ domain }}{% url 'account:activate' uidb64=uid token=token %}">激活账号</a>
+</body>
+</html>

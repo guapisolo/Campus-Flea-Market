@@ -1,0 +1,138 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block stylesheet %}{% static 'store/css/store.css' %}{% endblock %}
+{% block title %}
+{% if product %}{{ product.title }}{% else %}商品{% endif %}
+{% endblock %}
+{% block content %}
+
+<div id="info-msg" class="container">
+  <div class="alert alert-success alert-dismissable fw600 rounded-0 border-0 pb-3" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-info-circle me-2"
+      viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+      <path
+        d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+    </svg>
+    成功添加至购物车
+    <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+  </div>
+</div>
+
+<div class="container">
+{% if messages %}
+<div class="alert alert-warning" alert-{{ message.tags }}" role="alert">
+{% for message in messages  %}
+  {{message|safe}} - <a href="{% url "account:wishlist" %}" class="alert-link">点击查看</a>.
+{% endfor %}
+</div>
+{% endif %}
+  <div class="row g-3">
+    <div class="col-md-5 ps-3 col-lg-5 order-md-last p-0 order-1">
+      <div class="d-grid gap-2">
+        <div class="d-flex d-flex-inline justify-content-between">
+          <div><span class="h3">{{ product.regular_price }} 元</span>
+            <p>{{ product.description|slice:":355" }}...</p>
+            <a role="button" href="{% url "account:view_seller" product.seller_id%}" class="btn btn-light fw100" type="button">查看卖家信息</a>
+          </div>
+          <div>
+            <label for="select">数量</label>
+            <select id="select" class="h6 store-select-dropdown">
+              {% if product.quantity >= 1 %}
+              <option value="1">1</option>
+              {% endif %}
+              {% if product.quantity >= 2 %}
+              <option value="2">2</option>
+              {% endif %}
+              {% if product.quantity >= 3 %}
+              <option value="3">3</option>
+              {% endif %}
+              {% if product.quantity >= 4 %}
+              <option value="4">4</option>
+              {% endif %}
+            </select>
+          </div>
+        </div>
+        <hr>
+        <br>
+        <br>
+        {% comment %} <a herf="account." {% endcomment %}
+        {% if product.quantity <= 0 %}
+          <button type="button" class="btn btn-danger fw500" disabled>已售罄</button>
+        {% else %}
+          <button type="button" id="add-button" value="{{product.id}}" class="btn btn-success fw500" >添加到购物车</button>
+        {% endif %}
+        <a href="{% url "account:user_wishlist" product.id  %}" class="btn btn-light fw500" role="button" aria-disabled="true">添加到心愿清单</a>
+      </div>
+    </div>
+    <div class="col-md-7 col-lg-7 p-0">
+      <div class="card mb-3 border-0">
+        <div class="row g-0">
+          <div class="col-md-12">
+            <div class="card-body p-1">
+              <h1 class="mb-0 h2 pe-4 pb-4">{{ product.title }}</h1>
+              <div class="bg-light">
+
+                {% for image in product.product_image.all %}
+                {% if image.is_feature %}
+                <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{ image.image.url }}"
+                  alt="{{ image.image.alt_text }}">
+                {% else %}
+                <img class="img-fluid d-block-inline pt-3" width="100px" alt="Responsive image"
+                  src="{{ image.image.url }}" alt="{{ image.image.alt_text }}">
+                {% endif %}
+                {% endfor %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<br>
+<br>
+<br>
+<div>
+    <h1 class="mb-0 h2 pe-2 pb-4">评论:</h1>
+      {% if product.order_product.all %}
+      {% for order in product.order_product.all %}
+      {% if order.comments %}
+        <span style="color: green;">
+          {{ order.comments.created|date:"Y-m-d H:i:s" }}
+        </span>
+      <p><span style="color: green;">{{ order.user }}</span>评论道：{{ order.comments.body }}</p>
+      {% else %}
+      <span style="color: green;">
+          {{ order.created|date:"Y-m-d H:i:s" }}
+        </span>
+      <p><span style="color: green;">{{ order.user }}</span>已购买此商品，但尚未评论。</p>
+      <br>
+      {% endif %}
+      {% endfor %}
+      {% else %}
+        <p style="text-align:center;">暂无购买记录。</p>
+      {% endif %}
+    </div>
+  <script>
+    $(document).on('click', '#add-button', function (e) {
+      e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '{% url "basket:basket_add" %}',
+        data: {
+          productid: $('#add-button').val(),
+          productqty: $('#select option:selected').text(),
+          csrfmiddlewaretoken: "{{csrf_token}}",
+          action: 'post'
+        },
+        success: function (json) {
+          document.getElementById("basket-qty").innerHTML = json.qty
+          document.getElementById("info-msg").style.display = 'block'
+        },
+        error: function (xhr, errmsg, err) {}
+      });
+    })
+  </script>
+
+  {% endblock %}

@@ -1,0 +1,22 @@
+{% extends "../base.html" %}
+{% block title %}发布评价{% endblock %}
+{% block content %}
+<div class="col-6 mx-auto">
+            <form name="comment_form" class="comment-form"  method="POST">
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="body">
+                       <h1 class="mb-0 h2 pe-2 pb-4" >评论:</h1>
+                    </label>
+                    <textarea
+                        type="text"
+                        class="form-control"
+                        id="body"
+                        name="body"
+                        rows="10"></textarea>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary ">提交</button>
+            </form>
+        </div>
+{% endblock %}
