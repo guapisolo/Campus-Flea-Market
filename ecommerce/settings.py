@@ -130,15 +130,15 @@ LOGIN_URL = "/account/login/"
 
 # Email setting
 # smtp 服务的邮箱服务器
-EMAIL_HOST = 'smtp.qq.com'
-DEFAULT_FROM_EMAIL = '1602996552@qq.com'
+EMAIL_HOST = 'xx.qq.com'
+DEFAULT_FROM_EMAIL = 'xxx@qq.com'
 # smtp服务固定的端口是25
 EMAIL_PORT = 25
 # 发送邮件的邮箱
-EMAIL_HOST_USER = "1602996552@qq.com"
+EMAIL_HOST_USER = "xxx@qq.com"
 EMAIL_USE_TLS = False
 # 在邮箱中设置的客户端授权密码
-EMAIL_HOST_PASSWORD = 'btefuitwzrqziihi'
+EMAIL_HOST_PASSWORD = 'xxx'
 # 收件人看到的发件人<此处要和发送邮件的邮箱相同>
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
